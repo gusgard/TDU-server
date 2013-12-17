@@ -16,14 +16,15 @@ class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
         print "Deserializado", vehiculo
         self.request.sendall(response)
 
-
+#proceso forking.
+#class ThreadedTCPServer(SocketServer.ForkingMixIn, SocketServer.TCPServer):
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
     pass
 
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
-    HOST, PORT = "localhost", 9997
+    HOST, PORT = "localhost", 9995
 
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     #ip, port = server.server_address
