@@ -1,5 +1,6 @@
 import threading
 import SocketServer
+import socket
 from vehiculo import Vehiculo
 
 class ThreadedTCPRequestHandler(SocketServer.BaseRequestHandler):
@@ -24,8 +25,9 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
-    HOST, PORT = "awseb-e-q-AWSEBLoa-U0TZFW27RVH5-1541299131.us-west-2.elb.amazonaws.com", 9997
 
+    HOST, PORT = socket.gethostbyname(socket.gethostname()), 9997
+    print HOST
     server = ThreadedTCPServer((HOST, PORT), ThreadedTCPRequestHandler)
     #ip, port = server.server_address
 

@@ -1,4 +1,5 @@
 import SocketServer
+import socket
 
 class MyTCPHandler(SocketServer.BaseRequestHandler):
     """
@@ -20,7 +21,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         self.request.sendall(self.data.upper())
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 9999
+    HOST, PORT = socket.gethostbyname(socket.gethostname()), 9997
 
     # Create the server, binding to localhost on port 9999
     server = SocketServer.TCPServer((HOST, PORT), MyTCPHandler)
