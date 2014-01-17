@@ -25,6 +25,9 @@ class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
 
 if __name__ == "__main__":
     # Port 0 means to select an arbitrary unused port
+    #import sys
+    #f = open('/home/yoda/loggg.txt', 'w')
+    #sys.stdout = f
 
     HOST, PORT = socket.gethostbyname(socket.gethostname()), 9997
     print HOST
