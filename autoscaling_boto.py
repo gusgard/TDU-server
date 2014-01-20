@@ -41,8 +41,6 @@ This script will do 3 things:
 AWS_ACCESS_KEY = 'AKIAJZI75BMMVHTMVVOA' #Your access key
 AWS_SECRET_KEY = 'ERwNNG8TCbW4ZOOtm6aWYHIzY+BfeKfhvevvAxAW' #Your secret key
 
-#conn = EC2Connection('AKIAJZI75BMMVHTMVVOA', 'ERwNNG8TCbW4ZOOtm6aWYHIzY+BfeKfhvevvAxAW')
-
 region = 'us-west-2' #The region you want to connect to
 
 elastic_load_balancer = {
@@ -75,12 +73,12 @@ as_ami = {
 
 #=================Construct a list of all availability zones for your region=========
 
-#conn_reg = boto.ec2.connect_to_region(region_name=region)
-conn_reg = boto.ec2.connect_to_region(
-    region_name=region,
-    aws_access_key_id=AWS_ACCESS_KEY,
-    aws_secret_access_key=AWS_SECRET_KEY,
-      )
+conn_reg = boto.ec2.connect_to_region(region_name=region)
+#conn_reg = boto.ec2.connect_to_region(
+#    region_name=region,
+#    aws_access_key_id=AWS_ACCESS_KEY,
+#    aws_secret_access_key=AWS_SECRET_KEY,
+#      )
 
 zones = conn_reg.get_all_zones()
 
@@ -97,22 +95,23 @@ for zone in zones:
 
 #ec2c = boto.ec2.connection(AWS_ACCESS_KEY, AWS_SECRET_KEY, region)
 #elbc = boto.ec2.elb.ELBConnection(aws_access_key, aws_secret_key, region=ec2c.region)
+#ec2c = boto.ec2.connect_to_region(region, aws_access_key_id=AWS_ACCESS_KEY, aws_secret_access_key=AWS_SECRET_KEY)
+
+#conn_elb = ELBConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY,region=conn_reg.region)
 
 
-conn_elb = ELBConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY,region=conn_reg.region)
-conn_as = AutoScaleConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY,region=conn_reg.region)
+#conn_elb = ELBConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY,region=conn_reg.region)
+#conn_as = AutoScaleConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY,region=conn_reg.region)
+conn_elb = ELBConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY)
+conn_as = AutoScaleConnection(AWS_ACCESS_KEY, AWS_SECRET_KEY)
+
 
 #=================Create a Load Balancer=============================================
 #For a complete list of options see http://boto.cloudhackers.com/ref/ec2.html#module-boto.ec2.elb.healthcheck
-hc = HealthCheck('healthCheck',
-                     interval=elastic_load_balancer['interval'],
-                     target=elastic_load_balancer['health_check_target'],
-                     timeout=elastic_load_balancer['timeout'])
+hc = HealthCheck('healthCheck', interval=elastic_load_balancer['interval'], target=elastic_load_balancer['health_check_target'], timeout=elastic_load_balancer['timeout'])
 
 #For a complete list of options see http://boto.cloudhackers.com/ref/ec2.html#boto.ec2.elb.ELBConnection.create_load_balancer
-lb = conn_elb.create_load_balancer(elastic_load_balancer['name'],
-                                       zoneStrings,
-                                       elastic_load_balancer['connection_forwarding'])
+lb = conn_elb.create_load_balancer(elastic_load_balancer['name'], zoneStrings, elastic_load_balancer['connection_forwarding'])
 
 lb.configure_health_check(hc)
 
