@@ -1,5 +1,5 @@
-AWS_ACCESS_KEY = 'AKIAJZI75BMMVHTMVVOA' #Your access key
-AWS_SECRET_KEY = 'ERwNNG8TCbW4ZOOtm6aWYHIzY+BfeKfhvevvAxAW' #Your secret key
+AWS_ACCESS_KEY = '_' #Your access key
+AWS_SECRET_KEY = '_' #Your secret key
 
 key = AWS_ACCESS_KEY
 sk = AWS_SECRET_KEY

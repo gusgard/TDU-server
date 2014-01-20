@@ -38,17 +38,17 @@ This script will do 3 things:
 2. Create an Auto Scaling Group and configure it with an Launch Configuration
 3. Create Policies for Scaling Up and Scaling Down
 """
-AWS_ACCESS_KEY = 'AKIAJZI75BMMVHTMVVOA' #Your access key
-AWS_SECRET_KEY = 'ERwNNG8TCbW4ZOOtm6aWYHIzY+BfeKfhvevvAxAW' #Your secret key
+AWS_ACCESS_KEY = '_' #Your access key
+AWS_SECRET_KEY = '_' #Your secret key
 
 region = 'us-west-2' #The region you want to connect to
 
 elastic_load_balancer = {
     'name': 'mylbbb',#The name of your load balancer
-    'health_check_target': 'HTTP:80/index.html',#Location to perform health checks
-    'connection_forwarding': [(80, 80, 'http'), (443, 443, 'tcp')],#[Load Balancer Port, EC2 Instance Port, Protocol]
-    'timeout': 3, #Number of seconds to wait for a response from a ping
-    'interval': 20 #Number of seconds between health checks
+    'health_check_target': 'TCP:22',#Location to perform health checks
+    'connection_forwarding': [(80, 80, 'http'), (9997, 9997, 'tcp')],#[Load Balancer Port, EC2 Instance Port, Protocol]
+    'timeout': 5, #Number of seconds to wait for a response from a ping
+    'interval': 12 #Number of seconds between health checks
 }
 
 autoscaling_group = {
